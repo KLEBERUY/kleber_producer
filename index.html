@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kleber Producer - Compra y Vende Beats Profesionales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>Kleber Producer</h1>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Buscar usuarios..." class="search-input">
+                    <button class="search-btn" id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="search-results" id="search-results" style="display: none;">
+                    <!-- Search results will appear here -->
+                </div>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#beats" class="nav-link">Beats</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#upload" class="nav-link">Subir Beat</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#cart" class="nav-link"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#profile" class="nav-link" id="profile-link" style="display: none;">Mi Perfil</a>
+                </li>
+                 <li class="nav-item">
+                    <a href="#auth" class="nav-link" id="auth-link">Login / Registro</a>
+                </li>
+                
+                <li class="nav-item">
+                    <button class="theme-toggle" id="theme-toggle">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="hero">
+                    <h2 class="hero-title">Compra y vende beats profesionales</h2>
+                    <p class="hero-subtitle">La plataforma definitiva para productores y artistas</p>
+                    <button class="btn btn-primary" id="explore-beats">
+                        <i class="fas fa-play"></i> Explorar Beats
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Authentication Section -->
+        <section id="auth" class="section section-auth">
+            <div class="container">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
+                        <button class="auth-tab" data-tab="register">Registrarse</button>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="login-form" class="auth-form active">
+                        <h3>Iniciar Sesión</h3>
+                        <div class="form-group">
+                            <input type="email" id="login-email" placeholder="Email" required>
+                            <span class="form-error" id="login-email-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="login-password" placeholder="Contraseña" required>
+                            <span class="form-error" id="login-password-error"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        <div class="auth-message" id="login-message"></div>
+                    </form>
+                    
+                    <!-- Register Form -->
+                    <form id="register-form" class="auth-form">
+                        <h3>Registrarse</h3>
+                        <div class="form-group">
+                            <input type="email" id="register-email" placeholder="Email" required>
+                            <span class="form-error" id="register-email-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="register-password" placeholder="Contraseña" required>
+                            <span class="form-error" id="register-password-error"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                        <div class="auth-message" id="register-message"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Beats Section -->
+        <section id="beats" class="section">
+            <div class="container">
+                <h2 class="section-title">Beats Disponibles</h2>
+                <div class="beats-grid" id="beats-grid">
+                    <!-- Beats will be loaded here from Firebase -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Beat Section -->
+        <section id="upload" class="section">
+            <div class="container">
+                <h2 class="section-title">Subir tu Beat</h2>
+                <form id="upload-form" class="upload-form">
+                    <div class="form-group">
+                        <label for="beat-name">Nombre del Beat</label>
+                        <input type="text" id="beat-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="beat-price">Precio (USD $)</label>
+                        <input type="number" id="beat-price" min="0" step="0.01" placeholder="Ej: 19.99" required>
+                        <small>Precio en dólares americanos</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="beat-audio">Archivo de Audio</label>
+                        <input type="file" id="beat-audio" accept="audio/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="beat-cover">Imagen de Cover</label>
+                        <input type="file" id="beat-cover" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Subir Beat
+                    </button>
+                    <div class="upload-message" id="upload-message"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- User Profile Section -->
+        <section id="profile" class="section" style="display: none;">
+            <div class="container">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2 class="profile-name" id="profile-name">--</h2>
+                            <p class="profile-email" id="profile-email">--</p>
+                            <p class="profile-stats">
+                                <span class="stat-item">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <span id="purchased-count">0</span> Beats Comprados
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span id="total-spent">$0.00</span> Gastados
+                                </span>
+                            </p>
+                        </div>
+                        <div class="profile-header-actions">
+                            <button class="btn btn-secondary" onclick="handleLogout()">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-content">
+                        <div class="profile-tabs">
+                            <button class="profile-tab active" data-tab="purchased">Beats Comprados</button>
+                            <button class="profile-tab" data-tab="uploaded">Mis Beats</button>
+                        </div>
+                        
+                        <div class="tab-content">
+                            <!-- Purchased Beats Tab -->
+                            <div id="purchased-tab" class="tab-pane active">
+                                <h3>Beats Comprados</h3>
+                                <div class="beats-grid" id="purchased-beats">
+                                    <!-- Purchased beats will be loaded here -->
+                                </div>
+                                <div class="empty-state" id="purchased-empty">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <p>Aún no has comprado beats</p>
+                                    <button class="btn btn-primary" onclick="switchSection('beats')">
+                                        <i class="fas fa-play"></i> Explorar Beats
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Uploaded Beats Tab -->
+                            <div id="uploaded-tab" class="tab-pane">
+                                <h3>Mis Beats Subidos</h3>
+                                <div class="beats-grid" id="uploaded-beats">
+                                    <!-- Uploaded beats will be loaded here -->
+                                </div>
+                                <div class="empty-state" id="uploaded-empty">
+                                    <i class="fas fa-upload"></i>
+                                    <p>Aún no has subido beats</p>
+                                    <button class="btn btn-primary" onclick="switchSection('upload')">
+                                        <i class="fas fa-plus"></i> Subir tu Primer Beat
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Section -->
+        <section id="cart" class="section">
+            <div class="container">
+                <h2 class="section-title">Carrito de Compras</h2>
+                <div class="cart-container">
+                    <div class="cart-items" id="cart-items">
+                        <!-- Cart items will be displayed here -->
+                    </div>
+                    <div class="cart-summary">
+                        <div class="cart-total">
+                            <h3>Total: $<span id="cart-total">0.00</span></h3>
+                        </div>
+                        <button class="btn btn-primary" id="checkout-btn">
+                            <i class="fas fa-credit-card"></i> Procesar Compra
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Section -->
+        <section id="payment" class="section" style="display: none;">
+            <div class="container">
+                <div class="payment-container">
+                    <div class="payment-header">
+                        <button class="back-btn" onclick="switchSection('cart')">
+                            <i class="fas fa-arrow-left"></i> Volver al Carrito
+                        </button>
+                        <h2 class="section-title">Procesar Pago</h2>
+                    </div>
+                    
+                    <div class="payment-content">
+                        <div class="payment-order-summary">
+                            <h3>Resumen del Pedido</h3>
+                            <div class="order-items" id="order-items">
+                                <!-- Order items will be displayed here -->
+                            </div>
+                            <div class="order-total">
+                                <div class="total-row">
+                                    <span>Subtotal:</span>
+                                    <span id="order-subtotal">$0.00</span>
+                                </div>
+                                <div class="total-row">
+                                    <span>Tarifa de servicio:</span>
+                                    <span id="service-fee">$0.00</span>
+                                </div>
+                                <div class="total-row final-total">
+                                    <span>Total:</span>
+                                    <span id="order-total">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-form-container">
+                            <h3>Información de Pago</h3>
+                            <form id="payment-form" class="payment-form">
+                                <div class="payment-methods">
+                                    <label class="payment-method active">
+                                        <input type="radio" name="payment-method" value="card" checked>
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>Tarjeta de Crédito/Débito</span>
+                                    </label>
+                                    <label class="payment-method">
+                                        <input type="radio" name="payment-method" value="paypal">
+                                        <i class="fab fa-paypal"></i>
+                                        <span>PayPal</span>
+                                    </label>
+                                </div>
+                                
+                                <!-- Credit Card Form -->
+                                <div id="card-payment-form" class="payment-form-content">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="card-name">Nombre en la tarjeta</label>
+                                            <input type="text" id="card-name" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="card-number">Número de tarjeta</label>
+                                        <div class="card-input-wrapper">
+                                            <input type="text" id="card-number" maxlength="19" required>
+                                            <div class="card-icons">
+                                                <i class="fab fa-cc-visa"></i>
+                                                <i class="fab fa-cc-mastercard"></i>
+                                                <i class="fab fa-cc-amex"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="card-expiry">Fecha de expiración</label>
+                                            <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="card-cvv">CVV</label>
+                                            <input type="text" id="card-cvv" maxlength="4" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="billing-email">Email de facturación</label>
+                                        <input type="email" id="billing-email" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- PayPal Button Container -->
+                                <div id="paypal-payment-form" class="payment-form-content" style="display: none;">
+                                    <div id="paypal-button-container"></div>
+                                </div>
+                                
+                                <div class="payment-actions">
+                                    <button type="submit" class="btn btn-primary btn-large" id="submit-payment">
+                                        <i class="fas fa-lock"></i> Pagar de forma segura
+                                    </button>
+                                    <p class="payment-security">
+                                        <i class="fas fa-shield-alt"></i>
+                                        Tu información está segura y encriptada
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Success Section -->
+        <section id="payment-success" class="section" style="display: none;">
+            <div class="container">
+                <div class="success-container">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>¡Pago Exitoso!</h2>
+                    <p>Tu compra ha sido procesada correctamente</p>
+                    <div class="order-details" id="order-details">
+                        <!-- Order details will be displayed here -->
+                    </div>
+                    <div class="success-actions">
+                        <button class="btn btn-primary" onclick="showSection('profile')">
+                            <i class="fas fa-music"></i> Ver mis beats
+                        </button>
+                        <button class="btn btn-secondary" onclick="showSection('beats')">
+                            <i class="fas fa-play"></i> Explorar más beats
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Public Profile Section -->
+        <section id="public-profile" class="section" style="display: none;">
+            <div class="container">
+                <div class="public-profile-container">
+                    <div class="public-profile-header">
+                        <button class="back-btn" onclick="showMainContent()">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                        <div class="public-profile-info">
+                            <div class="public-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h2 class="public-username" id="public-username">--</h2>
+                            <p class="public-stats">
+                                <span class="stat-item">
+                                    <i class="fas fa-music"></i>
+                                    <span id="public-beats-count">0</span> Beats
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="public-time-platform">--</span>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="public-profile-content">
+                        <h3 class="public-section-title">Beats de <span id="public-display-name">--</span></h3>
+                        <div class="beats-grid" id="public-beats-grid">
+                            <!-- Public beats will be loaded here -->
+                        </div>
+                        <div class="empty-state" id="public-empty" style="display: none;">
+                            <i class="fas fa-music"></i>
+                            <p>Este usuario no ha subido beats todavía</p>
+                            <button class="btn btn-primary" onclick="showMainContent()">
+                                <i class="fas fa-arrow-left"></i> Volver al Catálogo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification Modal -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <span class="notification-message" id="notification-message"></span>
+            <button class="notification-close" id="notification-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Audio Player -->
+    <div class="audio-player" id="audio-player">
+        <div class="player-controls">
+            <button class="player-btn" id="play-pause-btn">
+                <i class="fas fa-play"></i>
+            </button>
+            <div class="player-info">
+                <span class="player-title" id="player-title">--</span>
+                <div class="player-progress">
+                    <div class="progress-bar" id="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+            <button class="player-btn" id="close-player">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <audio id="audio-element"></audio>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    
+    <!-- Stripe SDK -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+    
+    <!-- Main App Script -->
+    <script src="app.js"></script>
+</body>
+</html>
